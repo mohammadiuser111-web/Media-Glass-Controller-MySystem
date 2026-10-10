@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        runtime: [win-x64, win-arm64]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Publish
+        run: >-
+          dotnet publish src/MediaGlass/MediaGlass.csproj
+          --configuration Release
+          --runtime ${{ matrix.runtime }}
+          --self-contained true
+          --output artifacts/${{ matrix.runtime }}
+
+      - name: Package
+        shell: pwsh
+        run: Compress-Archive -Path artifacts/${{ matrix.runtime }}/* -DestinationPath MediaGlass-${{ matrix.runtime }}.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MediaGlass-${{ matrix.runtime }}
+          path: MediaGlass-${{ matrix.runtime }}.zip
+
+      - name: Add release asset
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: MediaGlass-${{ matrix.runtime }}.zip

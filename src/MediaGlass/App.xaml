@@ -1,0 +1,113 @@
+<Application x:Class="MediaGlass.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+        <FontFamily x:Key="UiFont">Segoe UI Variable, Segoe UI</FontFamily>
+        <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+
+        <Style x:Key="GlassIconButton" TargetType="Button">
+            <Setter Property="Width" Value="34" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Margin" Value="3,0" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#26FFFFFF" />
+            <Setter Property="BorderBrush" Value="#30FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontFamily" Value="{StaticResource IconFont}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="17">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#45FFFFFF" />
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#66FFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#62FFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.35" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="SliderTrackButtonTemplate" TargetType="RepeatButton">
+            <Border Height="4"
+                    Margin="0,8"
+                    CornerRadius="2"
+                    Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="SliderThumbTemplate" TargetType="Thumb">
+            <Grid Background="Transparent">
+                <Ellipse Width="13"
+                         Height="13"
+                         Fill="White"
+                         Stroke="#90FFFFFF"
+                         StrokeThickness="1">
+                    <Ellipse.Effect>
+                        <DropShadowEffect BlurRadius="5" ShadowDepth="1" Opacity="0.4" />
+                    </Ellipse.Effect>
+                </Ellipse>
+            </Grid>
+        </ControlTemplate>
+
+        <Style x:Key="GlassSlider" TargetType="Slider">
+            <Setter Property="Height" Value="22" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="IsMoveToPointEnabled" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
+                                                  Background="{TemplateBinding Foreground}"
+                                                  Template="{StaticResource SliderTrackButtonTemplate}" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}"
+                                                  Background="#38FFFFFF"
+                                                  Template="{StaticResource SliderTrackButtonTemplate}" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Template="{StaticResource SliderThumbTemplate}" />
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.38" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WindowActionButton" TargetType="Button" BasedOn="{StaticResource GlassIconButton}">
+            <Setter Property="Width" Value="27" />
+            <Setter Property="Height" Value="27" />
+            <Setter Property="Margin" Value="2,0" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </Application.Resources>
+</Application>
