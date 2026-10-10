@@ -6,19 +6,19 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d"
         Title="Media Glass Controller - MySystem"
-        Width="470"
-        Height="176"
-        MinWidth="410"
-        MinHeight="158"
-        MaxWidth="650"
-        MaxHeight="230"
+        Width="330"
+        Height="112"
+        MinWidth="300"
+        MinHeight="104"
+        MaxWidth="480"
+        MaxHeight="150"
         WindowStyle="None"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="CanResize"
         AllowsTransparency="False"
         Background="#01000000"
         ShowInTaskbar="False"
         Topmost="True"
-        FontFamily="{StaticResource UiFont}"
+        FontFamily="Segoe UI"
         Foreground="White"
         SourceInitialized="OnSourceInitialized"
         Loaded="OnLoaded"
@@ -27,32 +27,23 @@
         MouseLeftButtonDown="OnWindowMouseLeftButtonDown">
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="0"
-                            CornerRadius="20"
+                            CornerRadius="16"
                             GlassFrameThickness="0"
-                            ResizeBorderThickness="7"
+                            ResizeBorderThickness="5"
                             UseAeroCaptionButtons="False" />
     </shell:WindowChrome.WindowChrome>
 
     <Border x:Name="RootBorder"
-            Margin="8"
-            CornerRadius="22"
+            CornerRadius="16"
             BorderThickness="1"
             BorderBrush="#50FFFFFF"
             ClipToBounds="True">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="26"
-                              Direction="270"
-                              ShadowDepth="7"
-                              Opacity="0.52"
-                              Color="#000000" />
-        </Border.Effect>
-
         <Grid>
             <Image Source="{Binding Artwork}"
                    Stretch="UniformToFill"
                    Opacity="0.52">
                 <Image.Effect>
-                    <BlurEffect Radius="34" KernelType="Gaussian" />
+                    <BlurEffect Radius="30" KernelType="Gaussian" />
                 </Image.Effect>
             </Image>
 
@@ -65,17 +56,17 @@
                 </Rectangle.Fill>
             </Rectangle>
 
-            <Rectangle Fill="#18000000" />
+            <Rectangle Fill="#12000000" />
 
-            <Grid Margin="13">
+            <Grid Margin="8">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="116" />
+                    <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Border Grid.Column="0"
-                        Margin="0,0,13,0"
-                        CornerRadius="16"
+                        Margin="0,0,8,0"
+                        CornerRadius="12"
                         BorderThickness="1"
                         BorderBrush="#54FFFFFF">
                     <Border.Background>
@@ -86,10 +77,9 @@
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="28" />
-                        <RowDefinition Height="27" />
-                        <RowDefinition Height="20" />
-                        <RowDefinition Height="31" />
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="16" />
+                        <RowDefinition Height="23" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -99,19 +89,13 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                Padding="9,3"
-                                CornerRadius="9"
-                                Background="#24FFFFFF"
-                                BorderBrush="#2FFFFFFF"
-                                BorderThickness="1">
-                            <TextBlock Text="{Binding Source}"
-                                       FontSize="10.5"
-                                       Foreground="#DFFFFFFF"
-                                       TextTrimming="CharacterEllipsis"
-                                       MaxWidth="175" />
-                        </Border>
+                        <TextBlock Grid.Column="0"
+                                   Margin="0,0,5,0"
+                                   Text="{Binding Title}"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   VerticalAlignment="Center" />
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
                             <Button x:Name="LockButton"
@@ -126,33 +110,26 @@
                     </Grid>
 
                     <TextBlock Grid.Row="1"
-                               Text="{Binding Title}"
-                               FontSize="15"
-                               FontWeight="SemiBold"
+                               Text="{Binding Artist}"
+                               FontSize="9.5"
+                               Foreground="#C8FFFFFF"
                                TextTrimming="CharacterEllipsis"
                                VerticalAlignment="Center" />
 
-                    <TextBlock Grid.Row="2"
-                               Text="{Binding Artist}"
-                               FontSize="11"
-                               Foreground="#BFFFFFFF"
-                               TextTrimming="CharacterEllipsis"
-                               VerticalAlignment="Top" />
-
-                    <Grid Grid.Row="3" Margin="0,3,0,0">
+                    <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="34" />
+                            <ColumnDefinition Width="29" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="39" />
+                            <ColumnDefinition Width="33" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0"
                                    Text="{Binding PositionText}"
-                                   FontSize="9.5"
+                                   FontSize="8"
                                    Foreground="#D9FFFFFF"
                                    VerticalAlignment="Center" />
                         <Slider x:Name="TimelineSlider"
                                 Grid.Column="1"
-                                Margin="3,0,5,0"
+                                Margin="2,0,4,0"
                                 Style="{StaticResource GlassSlider}"
                                 Minimum="0"
                                 Maximum="{Binding DurationSeconds}"
@@ -166,25 +143,25 @@
                         </Slider>
                         <TextBlock Grid.Column="2"
                                    Text="{Binding DurationText}"
-                                   FontSize="9.5"
+                                   FontSize="8"
                                    Foreground="#D9FFFFFF"
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Center" />
                     </Grid>
 
-                    <StackPanel Grid.Row="4"
+                    <StackPanel Grid.Row="3"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Bottom">
+                                VerticalAlignment="Center">
                         <Button Style="{StaticResource GlassIconButton}"
                                 Content="&#xE892;"
                                 ToolTip="Previous"
                                 IsEnabled="{Binding CanGoPrevious}"
                                 Command="{Binding PreviousCommand}" />
                         <Button Style="{StaticResource GlassIconButton}"
-                                Width="39"
-                                Height="39"
-                                FontSize="18"
+                                Width="30"
+                                Height="30"
+                                FontSize="15"
                                 Content="{Binding PlayPauseGlyph}"
                                 ToolTip="Play / Pause"
                                 IsEnabled="{Binding HasMedia}"

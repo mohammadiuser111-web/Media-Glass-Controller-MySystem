@@ -43,6 +43,7 @@ public partial class MainWindow : Window, IDisposable
         _ = eventArgs;
         _settings = new WidgetSettings
         {
+            SchemaVersion = WidgetSettings.CurrentSchemaVersion,
             Left = Left,
             Top = Top,
             Width = Width,
@@ -125,8 +126,11 @@ public partial class MainWindow : Window, IDisposable
 
     private void ApplySettings(WidgetSettings settings)
     {
-        Width = Math.Clamp(settings.Width, MinWidth, MaxWidth);
-        Height = Math.Clamp(settings.Height, MinHeight, MaxHeight);
+        bool usesCompactLayout = settings.SchemaVersion >= WidgetSettings.CurrentSchemaVersion;
+        double savedWidth = usesCompactLayout ? settings.Width : 330;
+        double savedHeight = usesCompactLayout ? settings.Height : 112;
+        Width = Math.Clamp(savedWidth, MinWidth, MaxWidth);
+        Height = Math.Clamp(savedHeight, MinHeight, MaxHeight);
         WindowStartupLocation = WindowStartupLocation.Manual;
         if (!double.IsNaN(settings.Left) && !double.IsNaN(settings.Top))
         {
@@ -164,7 +168,7 @@ public partial class MainWindow : Window, IDisposable
     private void SetPositionLocked(bool locked)
     {
         _isPositionLocked = locked;
-        ResizeMode = locked ? ResizeMode.NoResize : ResizeMode.CanResizeWithGrip;
+        ResizeMode = locked ? ResizeMode.NoResize : ResizeMode.CanResize;
         LockButton.Content = locked ? "\uE785" : "\uE72E";
         LockButton.ToolTip = locked ? AppStrings.UnlockPosition : AppStrings.LockPosition;
     }
