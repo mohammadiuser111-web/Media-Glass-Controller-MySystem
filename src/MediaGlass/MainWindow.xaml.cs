@@ -127,8 +127,8 @@ public partial class MainWindow : Window, IDisposable
     private void ApplySettings(WidgetSettings settings)
     {
         bool usesCompactLayout = settings.SchemaVersion >= WidgetSettings.CurrentSchemaVersion;
-        double savedWidth = usesCompactLayout ? settings.Width : 330;
-        double savedHeight = usesCompactLayout ? settings.Height : 112;
+        double savedWidth = usesCompactLayout ? settings.Width : 300;
+        double savedHeight = usesCompactLayout ? settings.Height : 100;
         Width = Math.Clamp(savedWidth, MinWidth, MaxWidth);
         Height = Math.Clamp(savedHeight, MinHeight, MaxHeight);
         WindowStartupLocation = WindowStartupLocation.Manual;

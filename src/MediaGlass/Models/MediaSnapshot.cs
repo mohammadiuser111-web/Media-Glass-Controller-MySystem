@@ -12,6 +12,7 @@ internal sealed record MediaSnapshot(
     bool IsPlaying,
     bool CanPlay,
     bool CanPause,
+    bool CanStop,
     bool CanSeek,
     bool CanGoPrevious,
     bool CanGoNext)
@@ -28,6 +29,7 @@ internal sealed record MediaSnapshot(
         IsPlaying: false,
         CanPlay: false,
         CanPause: false,
+        CanStop: false,
         CanSeek: false,
         CanGoPrevious: false,
         CanGoNext: false);

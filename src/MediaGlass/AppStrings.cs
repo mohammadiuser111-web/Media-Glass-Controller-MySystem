@@ -24,7 +24,9 @@ internal static class AppStrings
 
     public static string Next => IsPersian ? "بعدی" : "Next";
 
-    public static string PlayPause => IsPersian ? "پخش یا توقف" : "Play or pause";
+    public static string PlayPause => IsPersian ? "پخش یا مکث" : "Play or pause";
+
+    public static string Stop => IsPersian ? "توقف" : "Stop";
 
     public static string Close => IsPersian ? "بستن" : "Close";
 

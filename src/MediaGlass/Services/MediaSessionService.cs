@@ -47,6 +47,29 @@ internal sealed class MediaSessionService : IDisposable
         }
     }
 
+    public async Task StopAsync()
+    {
+        GlobalSystemMediaTransportControlsSession? session = _session;
+        if (session is null)
+        {
+            return;
+        }
+
+        GlobalSystemMediaTransportControlsSessionPlaybackControls? controls =
+            session.GetPlaybackInfo()?.Controls;
+        if (controls?.IsStopEnabled == true)
+        {
+            _ = await session.TryStopAsync();
+            return;
+        }
+
+        _ = await session.TryPauseAsync();
+        if (controls?.IsPlaybackPositionEnabled == true)
+        {
+            _ = await session.TryChangePlaybackPositionAsync(Math.Max(0, _timelineStart.Ticks));
+        }
+    }
+
     public async Task PreviousAsync()
     {
         if (_session is not null)
@@ -250,6 +273,7 @@ internal sealed class MediaSessionService : IDisposable
                 IsPlaying: playback?.PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing,
                 CanPlay: controls?.IsPlayEnabled == true,
                 CanPause: controls?.IsPauseEnabled == true,
+                CanStop: controls?.IsStopEnabled == true || controls?.IsPauseEnabled == true,
                 CanSeek: controls?.IsPlaybackPositionEnabled == true,
                 CanGoPrevious: controls?.IsPreviousEnabled == true,
                 CanGoNext: controls?.IsNextEnabled == true);

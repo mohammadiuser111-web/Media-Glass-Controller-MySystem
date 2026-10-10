@@ -2,7 +2,7 @@ namespace MediaGlass.Models;
 
 internal sealed class WidgetSettings
 {
-    public const int CurrentSchemaVersion = 2;
+    public const int CurrentSchemaVersion = 3;
 
     public int SchemaVersion { get; set; } = CurrentSchemaVersion;
 
@@ -10,9 +10,9 @@ internal sealed class WidgetSettings
 
     public double Top { get; set; } = double.NaN;
 
-    public double Width { get; set; } = 330;
+    public double Width { get; set; } = 300;
 
-    public double Height { get; set; } = 112;
+    public double Height { get; set; } = 100;
 
     public bool IsPositionLocked { get; set; }
 }

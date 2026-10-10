@@ -27,6 +27,7 @@ internal sealed class MainViewModel : ObservableObject, IDisposable
     private bool _isPlaying;
     private bool _hasMedia;
     private bool _canSeek;
+    private bool _canStop;
     private bool _canGoPrevious;
     private bool _canGoNext;
     private bool _isSeeking;
@@ -40,6 +41,9 @@ internal sealed class MainViewModel : ObservableObject, IDisposable
         TogglePlayPauseCommand = new AsyncCommand(
             _mediaService.TogglePlayPauseAsync,
             () => HasMedia);
+        StopCommand = new AsyncCommand(
+            _mediaService.StopAsync,
+            () => CanStop);
         PreviousCommand = new AsyncCommand(
             _mediaService.PreviousAsync,
             () => CanGoPrevious);
@@ -56,6 +60,8 @@ internal sealed class MainViewModel : ObservableObject, IDisposable
     }
 
     public AsyncCommand TogglePlayPauseCommand { get; }
+
+    public AsyncCommand StopCommand { get; }
 
     public AsyncCommand PreviousCommand { get; }
 
@@ -157,6 +163,12 @@ internal sealed class MainViewModel : ObservableObject, IDisposable
         private set => SetProperty(ref _canSeek, value);
     }
 
+    public bool CanStop
+    {
+        get => _canStop;
+        private set => SetProperty(ref _canStop, value);
+    }
+
     public bool CanGoPrevious
     {
         get => _canGoPrevious;
@@ -216,6 +228,7 @@ internal sealed class MainViewModel : ObservableObject, IDisposable
         IsPlaying = snapshot.IsPlaying;
         PlayPauseGlyph = snapshot.IsPlaying ? "\uE769" : "\uE768";
         CanSeek = snapshot.CanSeek;
+        CanStop = snapshot.CanStop;
         CanGoPrevious = snapshot.CanGoPrevious;
         CanGoNext = snapshot.CanGoNext;
 
@@ -259,6 +272,7 @@ internal sealed class MainViewModel : ObservableObject, IDisposable
     private void RaiseCommandStates()
     {
         TogglePlayPauseCommand.RaiseCanExecuteChanged();
+        StopCommand.RaiseCanExecuteChanged();
         PreviousCommand.RaiseCanExecuteChanged();
         NextCommand.RaiseCanExecuteChanged();
     }
