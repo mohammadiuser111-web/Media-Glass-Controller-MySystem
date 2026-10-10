@@ -65,18 +65,32 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Right">
-                    <Button x:Name="LockButton"
-                            Style="{StaticResource WindowActionButton}"
-                            Content="&#xE72E;"
-                            Click="OnLockButtonClick" />
-                    <Button x:Name="CloseButton"
-                            Style="{StaticResource WindowActionButton}"
-                            Content="&#xE8BB;"
-                            Click="OnCloseButtonClick" />
-                </StackPanel>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               Margin="3,0,7,0"
+                               Text="{Binding Title}"
+                               FontSize="10.5"
+                               FontWeight="SemiBold"
+                               TextTrimming="CharacterEllipsis"
+                               VerticalAlignment="Center" />
+
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal">
+                        <Button x:Name="LockButton"
+                                Style="{StaticResource WindowActionButton}"
+                                Content="&#xE72E;"
+                                Click="OnLockButtonClick" />
+                        <Button x:Name="CloseButton"
+                                Style="{StaticResource WindowActionButton}"
+                                Content="&#xE8BB;"
+                                Click="OnCloseButtonClick" />
+                    </StackPanel>
+                </Grid>
 
                 <Slider x:Name="TimelineSlider"
                         Grid.Row="1"

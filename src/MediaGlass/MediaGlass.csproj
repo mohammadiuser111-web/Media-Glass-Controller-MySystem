@@ -8,7 +8,7 @@
     <RootNamespace>MediaGlass</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\App.ico</ApplicationIcon>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <Authors>MySystem</Authors>
     <Product>Media Glass Controller - MySystem</Product>
     <Description>A draggable Windows 11 glass media controller with thumbnail theming and timeline seeking.</Description>
